@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------
+   FocusFlow design tokens — wired into Tailwind v4's CSS-first theme.
+   Palette + type roles per the build spec. Gold is a highlight only;
+   never used as a fill color for large surfaces.
+--------------------------------------------------------------------- */
+@theme {
+  --color-ink: #120b1e;
+  --color-surface: #241536;
+  --color-surface-maroon: #2c1420;
+  --color-royal: #6b21a8;
+  --color-royal-soft: #7c34ba;
+  --color-maroon: #6b0f1a;
+  --color-maroon-soft: #8a1826;
+  --color-gold: #d4af37;
+  --color-gold-soft: #e6c869;
+  --color-parchment: #f3ece0;
+  --color-muted: #a99bb5;
+  --color-border: #3a2451;
+  --color-success: #3f9d6e;
+  --color-warning: #e0a72e;
+  --color-danger: #b32133;
+
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-data: "Space Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --animate-drift: drift 60s linear infinite;
+  --animate-twinkle: twinkle 4s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 2.4s ease-in-out infinite;
+}
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-120px, -60px, 0); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+@keyframes pulse-ring {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.015); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  background: var(--color-ink);
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-parchment);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* light-intensity variant: still parchment/ink toned, never stark white */
+:root[data-intensity="light"] body {
+  background: #e9e0d2;
+  color: #241536;
+}
+:root[data-intensity="light"] .ff-surface {
+  background: #f3ece0;
+  border-color: #c9b98f;
+  color: #241536;
+}
+:root[data-intensity="light"] .ff-muted {
+  color: #6b5f78;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+/* Thin hairline elevation instead of blur/shadow, per design direction */
+.ff-surface {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.ff-surface-maroon {
+  background: var(--color-surface-maroon);
+  border: 1px solid var(--color-maroon-soft);
+}
+
+.ff-hard-shadow {
+  box-shadow: 2px 2px 0 0 var(--color-border);
+}
+
+.ff-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.ff-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+}
+.ff-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Focus-visible ring using gold, kept AA-contrast */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
